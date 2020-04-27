@@ -1,0 +1,20 @@
+{
+  "name": "thelma-camp",
+  "version": "1.0.0",
+  "description": "Fazer Thelma Campeã",
+  "main": "index.js",
+  "background": {
+    "scripts": [ "background.js" ]
+  },
+  "content_scripts": [ {
+    "all_frames": true,
+    "css": [ "bot-styles.css" ],
+    "js": [ "index.js" ],
+    "matches": [ "*://gshow.globo.com/realities/bbb/bbb20/votacao/*", "*://globoesporte.globo.com/*/votacao/*" ]
+  } ],
+  "author": "jazz",
+  "license": "ISC",
+  "permissions": [ "*://gshow.globo.com/*", "*://globoesporte.globo.com/*", "*://s3.glbimg.com/*", "*://royale.globo.com/polls/*/votes*", "*://jessicalewinter.github.io/*", "activeTab", "webRequest", "webRequestBlocking" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "web_accessible_resources": [ "bot-styles.css", "intercept.js" ]
+}
