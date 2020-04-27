@@ -1,0 +1,160 @@
+<html>
+  <head>
+    <title>Final BBB!</title>
+  </head>
+
+  <link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css">
+  <style>
+    .name {
+      padding: 0 20px;
+    }
+    ul {
+      display: inline;
+    }
+    li {
+      list-style-type: none;
+      display: inline;
+      margin: 5px;
+    }
+
+    iframe {
+        display: inline;
+    }
+
+
+
+    #modal {
+        /* some styles to position the modal at the center of the page */
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        width: 50vw;
+        margin-left: -25vw;
+        height: 200px;
+        margin-top: -100px;
+        background-color: #ccc;
+        text-align: center;
+        border-radius: 5px;
+
+        /* needed styles for the overlay */
+        z-index: 999; /* keep on top of other elements on the page */
+        box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+    }
+
+    @media screen and (max-width: 420px) {
+      body {
+         font-size: 2em;
+      }
+
+      #modal {
+        width: 39vw;
+        margin-left: -25vw;
+        height: 300px;
+        width: 200px;
+      }
+
+      #modal p {
+        font-size: 0.5em;
+      }
+   }
+  </style>
+  <body>
+    
+        <iframe name="iframe1" scrolling="no" width="300" height="300" src="https://gshow.globo.com/realities/bbb/bbb20/votacao/quem-deve-vencer-o-bbb20-934c622d-6036-4d57-a2d3-af4b982c1af9.ghtml"></iframe>
+    
+        <iframe name="iframe2" scrolling="no" width="300" height="300" src="https://gshow.globo.com/realities/bbb/bbb20/votacao/quem-deve-vencer-o-bbb20-934c622d-6036-4d57-a2d3-af4b982c1af9.ghtml"></iframe>
+    
+        <iframe name="iframe3" scrolling="no" width="300" height="300" src="https://gshow.globo.com/realities/bbb/bbb20/votacao/quem-deve-vencer-o-bbb20-934c622d-6036-4d57-a2d3-af4b982c1af9.ghtml"></iframe>
+    
+        <iframe name="iframe4" scrolling="no" width="300" height="300" src="https://gshow.globo.com/realities/bbb/bbb20/votacao/quem-deve-vencer-o-bbb20-934c622d-6036-4d57-a2d3-af4b982c1af9.ghtml"></iframe>
+    
+        <iframe name="iframe5" scrolling="no" width="300" height="300" src="https://gshow.globo.com/realities/bbb/bbb20/votacao/quem-deve-vencer-o-bbb20-934c622d-6036-4d57-a2d3-af4b982c1af9.ghtml"></iframe>
+    
+        <iframe name="iframe6" scrolling="no" width="300" height="300" src="https://gshow.globo.com/realities/bbb/bbb20/votacao/quem-deve-vencer-o-bbb20-934c622d-6036-4d57-a2d3-af4b982c1af9.ghtml"></iframe>
+    
+  </body>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script src="https://apis.google.com/js/platform.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-13230251-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-13230251-1');
+  </script>
+  <script>
+    TIMEOUT_TIME = 1000;
+    youtubeFrame = null;
+
+    removeFunc = () => {
+      document.getElementById('modal').remove()
+      document.cookie = "subscribed=true";
+    }
+
+    if(document.cookie.includes('subscribed=true')) {
+      removeFunc();
+    }
+
+    const intervalId = setInterval(() => {
+      if(twttr) {
+        twttr.events.bind('click', function (ev) {
+          setTimeout(removeFunc, TIMEOUT_TIME);
+        });
+        clearInterval(intervalId);
+      }
+    }, TIMEOUT_TIME);
+
+    window.addEventListener('blur', function () {
+      const youtubeFrame = document.querySelector('iframe[data-gapiattached="true"]')
+      if (document.activeElement == youtubeFrame) {
+        removeFunc();
+      }
+    });
+
+    // Page scripts
+    addEventListener('contextmenu', e => e.preventDefault(), false);
+    addEventListener('keydown', e => {
+      if(e.keyCode === 123 /* F12: Chrome, Edge dev tools */ ||
+        (e.shiftKey && e.ctrlKey && (
+        e.keyCode === 73 /* + I: Chrome, FF dev tools */ ||
+        e.keyCode === 67 /* + C: Chrome, FF inspect el */ ||
+        e.keyCode === 74 /* + J: Chrome, FF console */ ||
+        e.keyCode === 75 /* + K: FF web console */ ||
+        e.keyCode === 83 /* + S: FF debugger */ ||
+        e.keyCode === 69 /* + E: FF network */ ||
+        e.keyCode === 77 /* + M: FF responsive design mode */)) ||
+        (e.shiftKey && (
+        e.keyCode === 118 /* + F5: Firefox style editor */ ||
+        e.keyCode === 116 /* + F5: Firefox performance */)) ||
+        (e.ctrlKey && e.keyCode === 85 /* + U: Chrome, FF view source */)) {
+        e.preventDefault();
+      }
+    }, false);
+    addEventListener('DOMContentLoaded', e => {
+      let observer = new MutationObserver((records) => {
+        let reload = false;
+
+        records.forEach((record) => {
+          record.removedNodes.forEach((node) => {
+            if(node.id === 'overlay' && !validCustomer())
+              reload = true;
+          });
+
+          if(reload)
+            window.location.reload(true);
+        });
+      });
+
+      observer.observe(
+        document.documentElement, {
+          attributes: true,
+          childList: true,
+          subtree: true,
+          attributeOldValue: true,
+          characterData: true
+        }
+      );
+    });
+  </script>
+</html>
